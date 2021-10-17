@@ -1,0 +1,63 @@
+{% layout none %}
+
+{% assign enable_zoom = settings.quickshop_enable_zoom %}
+{% assign enable_video_autoplay = settings.quickshop_enable_video_autoplay %}
+{% assign enable_video_looping = settings.quickshop_enable_video_looping %}
+{% assign enable_cart_redirection = settings.quickshop_enable_cart_redirection %}
+{% assign images_layout = settings.quickshop_images_layout %}
+{% assign show_vendor = settings.show_vendor %}
+{% assign show_social_media_icons = settings.quickshop_show_social_media_icons %}
+{% assign show_payment_button = settings.quickshop_show_payment_button %}
+{% assign isQuickshop = true %}
+{% assign product_json = product | json %}
+{% assign product_json_sha256 = product_json | sha256 %}
+
+{% capture settings_string %}
+  {{ enable_zoom }}
+  {{ enable_cart_redirection }}
+  {{ images_layout }}
+  {{ show_vendor }}
+  {{ show_social_media_icons }}
+  {{ show_payment_button }}
+  {{ enable_video_autoplay }}
+  {{ enable_video_looping }}
+  {{ isQuickshop }}
+{% endcapture %}
+{% assign settings_sha256 = settings_string | sha256 %}
+
+<template data-product-options>
+  {
+    "product": {{ product_json }},
+    "product_settings": {
+      "addToCartText": {{ 'products.product.add_to_cart' | t | json }},
+      "enableHistory": false,
+      "processingText": {{ 'products.product.processing' | t | json }},
+      "setQuantityText": {{ 'products.product.set_quantity' | t | json }},
+      "soldOutText": {{ 'products.product.sold_out' | t | json }},
+      "unavailableText": {{ 'products.product.unavailable' | t | json }}
+    },
+    "images_layout": {{ images_layout | json }},
+    "enable_zoom": {{ enable_zoom | json }},
+    "enable_video_autoplay": {{ enable_video_autoplay | json }},
+    "enable_video_looping": {{ enable_video_looping | json }},
+    "enable_cart_redirection": {{ enable_cart_redirection | json }},
+    "enable_fixed_positioning": false,
+    "product_sha256": {{ product_json_sha256 | json }},
+    "settings_sha256": {{ settings_sha256 | json }},
+    "isQuickshop": true
+  }
+</template>
+
+<template data-product-html>
+  {%
+    render 'product',
+    product: product,
+    enable_zoom: enable_zoom,
+    images_layout: images_layout,
+    enable_linked_options: enable_linked_options,
+    show_vendor: show_vendor,
+    show_social_media_icons: show_social_media_icons,
+    show_payment_button: show_payment_button,
+    link_to: true,
+  %}
+</template>

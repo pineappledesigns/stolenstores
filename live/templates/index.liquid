@@ -1,0 +1,13 @@
+
+{% if settings.alternative-index-layout %}
+
+  {% layout 'alternative' %}
+
+{% else %}
+
+  {{ content_for_index }}
+
+{% endif %}
+
+
+<div class='social-widget-wrapper' data-widget-id='24075'></div>

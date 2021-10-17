@@ -1,0 +1,185 @@
+{% comment %}
+  @param product {Product}
+
+  @param show_vendor {Boolean}
+
+  @param show_social_media_icons {Boolean}
+
+  @param show_payment_button {Boolean}
+    Show the DPBs in the product form
+{% endcomment %}
+
+{% assign product_id = product.id %}
+{% assign selected_variant = product.selected_or_first_available_variant %}
+
+{% if show_vendor %}
+  <a class="product-vendor" href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a>
+{% endif %}
+
+<h1 class="product-title">
+  {% if product != blank %}
+    {% if link_to %}
+      <a href="{{ product.url }}">
+        {{ product.title }}
+      </a>
+    {% else %}
+      {{ product.title }}
+    {% endif %}
+  {% else %}
+    {{ 'products.product.onboarding.title' | t }}
+  {% endif %}
+</h1>
+
+<p class="product-price">
+  <span class="product-price-minimum money">
+    {% if product != blank %}
+      {{ selected_variant.price | money }}
+    {% else %}
+      {{ 'products.product.onboarding.price' | money }}
+    {% endif %}
+  </span>
+  <span
+    class="product-price-compare money original {% if selected_variant.compare_at_price > selected_variant.price %}visible{% endif %}"
+  >
+    {{ selected_variant.compare_at_price | money }}
+  </span>
+</p>
+
+{% assign variant_for_unit_price = selected_variant %}
+{% comment %}Inject unit-price begin{% endcomment %}
+{% comment %}
+  @param variant_for_unit_price
+    Product variant for price
+  @param tax_text
+    String containing 'tax included' text
+{% endcomment %}
+
+{% capture total_quantity %}
+  <span class="product-price__unit-price-total-quantity" data-unit-price-quantity>
+    {{ variant_for_unit_price.unit_price_measurement.quantity_value }}{{ variant_for_unit_price.unit_price_measurement.quantity_unit }}
+  </span>
+{% endcapture %}
+
+
+{% capture unit_price %}
+  <span class="product-price__unit-price-amount money" data-unit-price-amount>
+    {{ variant_for_unit_price.unit_price | money }}
+  </span>
+{% endcapture %}
+{% capture unit_measure %}
+  <span class="product-price__unit-price-measure" data-unit-price-measure>
+    {%- if variant_for_unit_price.unit_price_measurement.reference_value != 1 -%}
+      {{ variant_for_unit_price.unit_price_measurement.reference_value }}
+    {%- endif %}
+    {{ variant_for_unit_price.unit_price_measurement.reference_unit }}
+  </span>
+{% endcapture %}
+
+<div
+  class="
+    product-price__unit-price
+    {% unless variant_for_unit_price.unit_price_measurement %}hidden{% endunless %}
+  "
+  data-unit-price
+>
+  {{ 'products.product.price_per_unit_html' | t: total_quantity: total_quantity, unit_price: unit_price, unit_measure: unit_measure | strip_newlines }}
+</div>
+
+{% assign variant_for_unit_price = blank %}
+{% comment %}Inject unit-price end{% endcomment %}
+
+
+{%- capture tax_text -%}
+{{ 'products.product.tax_line_html' | t }}
+{%- endcapture -%}
+
+{%- if tax_text != blank -%}
+    <div class="
+      product-price__tax
+      {% unless selected_variant.taxable %}hidden{% endunless %}
+      "
+      data-tax-line
+    >
+      {{ tax_text }}
+    </div>
+{%- endif -%}
+
+{{ form | payment_terms }}
+
+{% unless product.has_only_default_variant %}
+  <div class="product-options">
+    {%-
+      render 'product-options-dropdown',
+      product: product,
+      form_id: product_id
+    -%}
+
+    <label class="product-option-column-1 product-option-row-4 product-option-quantity-label">{{ 'general.general.quantity' | t }}</label>
+    <input class="product-option-quantity" type="text" name="quantity" value="1" />
+
+    <div class="selector-wrapper no-js-required">
+      <label for="product-select-{{ product_id }}"></label>
+      <select
+        class="product-select"
+        name="id"
+        id="product-select-{{ product_id }}"
+        data-select-ignore
+      >
+        {% for variant in product.variants %}
+          {% if variant.available %}
+            <option
+              {% if variant == selected_variant %}selected="selected"{% endif %}
+              value="{{ variant.id }}" data-variant-id="{{ variant.id }}" data-sku="{{ variant.sku }}">
+              {{ variant.title }} - {{ variant.price | money }}
+            </option>
+          {% else %}
+            <option disabled="disabled" data-variant-id="{{ variant.id }}" value="{{ variant.id }}">
+              {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+            </option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+{% else %}
+  <div class="product-options product-options-default-only">
+    <input
+      class="product-select"
+      name="id"
+      value="{{ product.variants[0].id }}"
+      type="hidden"
+      data-variant-title="{{ product.variants[0].title }}"
+    />
+
+    <label class="product-option-column-1 product-option-row-1 product-option-quantity-label">{{ 'general.general.quantity' | t }}</label>
+    <input class="product-option-quantity" type="text" name="quantity" value="1" />
+  </div>
+{% endunless %}
+
+{% if product.available %}
+  <div id="infiniteoptions-container"></div>
+  <div id="uploadery-container"></div>
+{% endif %}
+
+{% if show_social_media_icons %}
+  {% render 'share-buttons' %}
+{% endif %}
+
+<div
+  class="
+    product-add-to-cart
+    {% if product != blank and show_payment_button %}
+      product-smart-payments
+    {% endif %}
+  "
+>
+  {% if selected_variant.available %}
+    <input class="add-to-cart" type="submit" value="{{ 'products.product.add_to_cart' | t }}" />
+  {% else %}
+    <input class="add-to-cart disabled" type="submit" value="{{ 'products.product.sold_out' | t }}" disabled/>
+  {% endif %}
+
+  {% if show_payment_button %}
+    {{ form | payment_button }}
+  {% endif %}
+</div>

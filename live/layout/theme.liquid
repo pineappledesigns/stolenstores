@@ -1,0 +1,638 @@
+<!doctype html>
+<html
+  class="
+    no-js
+    loading
+  "
+>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+ 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-197039455-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-197039455-1');
+</script>
+  
+
+
+  
+  
+
+    
+  
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TCSSPDN');</script>
+<!-- End Google Tag Manager -->
+  
+  
+  
+  <script src="https://www.googleoptimize.com/optimize.js?id=OPT-PVCDJ9M"></script>
+  <script src="http://afarkas.github.io/lazysizes/lazysizes.min.js"></script>
+  
+  <!-- Google Tag Server Side Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/hrztqavt.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WRZCR7N');</script>
+<!-- End Google Tag Server Side Manager -->
+
+
+
+  <!-- Preconnect Domains -->
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://monorail-edge.shopifysvc.com">
+
+  <!-- Preload Assets -->
+  <link rel="preload" href="{{ 'chiko-icons.woff' | asset_url }}" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="{{ 'pxu-social-icons.woff' | asset_url }}" as="font" type="font/woff" crossorigin>
+
+  <link rel="preload" href="{{ 'theme.css' | asset_url }}" as="style">
+
+  <link rel="preload" href="{{ 'modernizr-2.8.2.min.js' | asset_url  }}" as="script">
+
+  {% if template contains 'cart' %}
+    <link rel="preload" href="{{ '/services/javascripts/countries.js' }}" as="script">
+    <link rel="preload" href="{{ 'shopify_common.js' | shopify_asset_url }}" as="script">
+  {% endif %}
+
+  {% if template contains 'customers' %}
+    <link rel="preload" href="{{ 'shopify_common.js' | shopify_asset_url }}" as="script">
+    <link rel="preload" href="{{ 'customer_area.js' | shopify_asset_url }}" as="script">
+  {% endif %}
+
+  <link rel="preload" href="{{ 'grid.js' | asset_url }}" as="script">
+  
+
+
+  <title>
+    {{ page_title }}
+
+    {% if current_tags %}
+      &#8211; {{ current_tags | join: ', ' }}
+    {% endif %}
+
+    {% if current_page != 1 %}
+      &#8211; {{ 'general.pagination.page' | t: page_number: current_page }}
+    {% endif %}
+
+    {% unless page_title contains shop.name %}
+      &#8211; {{ shop.name }}
+    {% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
+
+  {% if settings.favicon %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {% endif %}
+
+  {% if template contains 'collection' and current_tags %}
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
+  {% else %}
+    <link rel="canonical" href="{{ canonical_url }}" />
+  {% endif %}
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  {{ content_for_header }}
+
+  {% assign twitter_handle = settings.social-twitter-link | split: 'twitter.com/' | last %}
+  {%
+    render 'social-meta-tags',
+    twitter_handle: twitter_handle,
+    default_image: page_image
+  %}
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+  {% if settings.custom-css != blank %}
+    <style>
+      {{ settings.custom-css }}
+    </style>
+  {% endif %}
+
+  <!-- Theme object -->
+  {% render 'theme-options' %}
+  
+  <!-- Start of Clerk.io E-commerce Personalisation tool - www.clerk.io -->
+  <script type="text/javascript">
+    (function(w,d){
+      var e=d.createElement('script');e.type='text/javascript';e.async=true;
+      e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
+      var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(e,s);
+      w.__clerk_q=w.__clerk_q||[];w.Clerk=w.Clerk||function(){w.__clerk_q.push(arguments)};
+    })(window,document);
+
+    Clerk('config', {
+      key: 'nRK2Lwqapoq5tZ70LAc21DCeOal6k0tU',
+      formatters: {
+        currency_converter: function(price) {
+          var converted_price = (price*Shopify.currency.rate);
+          return (converted_price).toString();
+        }
+      },
+      globals: {
+        currency_iso: "{{ cart.currency.iso_code }}",
+        currency_symbol: "{{ cart.currency.symbol }}"
+      }
+    });
+  </script>
+  <!-- End of Clerk.io E-commerce Personalisation tool - www.clerk.io -->
+</head>
+
+<body
+  class="
+    template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}
+    {% if customer %}
+      customer-logged-in
+    {% endif %}
+  "
+>
+  <!-- Google Tag Manager Server Side (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRZCR7N"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager  Server Side (noscript) -->
+
+  
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCSSPDN"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  
+  
+  {% include 'quickshop' %}
+
+  {% section 'pxs-announcement-bar' %}
+
+  {% section 'header' %}
+
+  <div class="main-content">
+    {{ content_for_layout }}
+  </div>
+
+  {% section 'footer' %}
+
+  <!-- Scripts -->
+  <!-- Third Party JS Libraries -->
+  <script src="{{ 'modernizr-2.8.2.min.js' | asset_url  }}" defer></script>
+
+  {% if template contains 'cart' %}
+    <script src="{{ '/services/javascripts/countries.js' }}" defer></script>
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+  {% endif %}
+
+  {% if template contains 'customers' %}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+    <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
+  {% endif %}
+
+  <script src="{{ 'grid.js' | asset_url }}" defer></script>
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-article begin{% endcomment %}
+  {% comment %}
+    Article structured data
+    https://developers.google.com/search/docs/data-types/articles
+  {% endcomment %}
+  
+  {% if template contains 'article' %}
+    {%- capture article_description  -%}
+      {%- if article.excerpt != blank -%}
+        {{ article.excerpt | strip_html }}
+      {%- else -%}
+        {{ article.content | truncatewords: 100 | strip_html }}
+      {%- endif -%}
+    {%- endcapture -%}
+  
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "{{ shop.url }}{{ article.url }}"
+        },
+        "headline": {{ article.title | json }},
+        {% if article.image %}
+          "image": {
+            "@type": "ImageObject",
+            "url": {{ article.image | img_url: '800x800' | prepend: 'https:' | json }},
+            "height": 800,
+            "width": 800
+          },
+        {% endif %}
+        "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json}},
+        "dateModified": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json}},
+        "author": {
+          "@type": "Person",
+          "name": {{ article.author | json }}
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }},
+          "logo": {
+            "@type": "ImageObject",
+            "url": {{ article.user.image | img_url: '200x200' | prepend: 'https:' | json }}
+          }
+        },
+        "description": {{ article_description | json }}
+      }
+    </script>
+  {% endif %}
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-article end{% endcomment %}
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-breadcrumbs begin{% endcomment %}
+  {% comment %}
+    Breadcrumbs
+    https://developers.google.com/search/docs/data-types/breadcrumbs
+  {% endcomment %}
+  
+  {%- if current_tags -%}
+    {%- assign tag_names = current_tags | join: ', ' %}
+    {% comment %}Converting an array to a handle converts it to a string{% endcomment %}
+    {%- capture tag_handles -%}
+      {%- for tag in current_tags -%}
+        {{- tag | handle | append: '|' -}}
+      {%- endfor -%}
+    {%- endcapture -%}
+  {%- endif -%}
+  
+  {% if collection.url == blank %}
+    {% assign collection_url = '/collections/all' %}
+  {% else %}
+    {% assign collection_url = collection.url %}
+  {% endif %}
+  
+  {% if template.name == 'product' 
+      or template.name == 'list-collections' 
+      or template.name == 'collection' 
+      or template.name == 'blog' 
+      or template.name == 'article' 
+      or template.name == 'search' 
+      or template.name == 'cart' 
+      or template.name == 'page'
+  %}
+  
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+        {% case template.name %}
+          {% when 'product' %}
+            {% if product.collections.size >= 1 %}
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@id": "{{ shop.url }}/collections",
+                  "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}/collections/{{ product.collections.first.handle }}",
+                  "name": {{ product.collections.first.title | json }}
+                }
+              },
+            {% else %}
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@id": "{{ shop.url }}/products",
+                  "name": {{ 'structured_data.breadcrumbs.products' | t | json }}
+                }
+              },
+            {% endif %}
+            {
+              "@type": "ListItem",
+              "position": {% if product.collections.size >= 1 %}3{% else %}2{% endif %},
+              "item": {
+                "@id": "{{ shop.url }}{{ product.url | within: collection }}",
+                "name": {{ product.title | json }}
+              }
+            }
+          {% when 'list-collections' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/collections",
+                "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
+              }
+            }
+            {% if current_page != 1 %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}/collections",
+                  "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                }
+              }
+            {% endif %}
+          {% when 'collection' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/collections",
+                "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@id": "{{ shop.url }}{{ collection_url }}",
+                "name": {{ collection.title | json }}
+              }
+            }
+            {% if current_tags %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                  "@id": "{{ shop.url }}{{ collection_url }}/{{- tag_handles | split: '|' | join: '+' -}}",
+                  "name": {{ 'structured_data.breadcrumbs.tags_html' | t: tags: tag_names | json }}
+                }
+              }
+            {% endif %}
+            {% if current_page != 1 %}
+              {% if current_tags %}
+                {% assign position = 4 %}
+              {% else %}
+                {% assign position = 3 %}
+              {% endif %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": {{ position }},
+                "item": {
+                  "@id": "{{ shop.url }}/collections?page={{ current_page }}",
+                  "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                }
+              }
+            {% endif %}
+          {% when 'blog' or 'article' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}{{ blog.url }}",
+                "name": {{ blog.title | json }}
+              }
+            }
+            {% if template.name == 'article' %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}{{ article.url }}",
+                  "name": {{ article.title | json }}
+                }
+              }
+            {% elsif current_tags %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}{{ blog.url }}/tagged/{{- tag_handles | split: '|' | join: '+' -}}",
+                  "name": {{ 'structured_data.breadcrumbs.tags_html' | t: tags: tag_names | json }}
+                }
+              }
+            {% endif %}
+            {% if current_page != 1 %}
+              {% if current_tags %}
+                {% assign position = 3 %}
+                {%- capture url -%}
+                  {{ shop.url }}{{ blog.url }}/tagged/{{ tag_handles | split: '|' | join: '+' }}?page={{ current_page }}
+                {%- endcapture -%}
+              {% else %}
+                {% assign position = 2 %}
+                  {%- capture url -%}
+                  {{ shop.url }}{{ blog.url }}?page={{ current_page }}
+                {%- endcapture -%}
+              {% endif %}
+              ,
+              {
+                "@type": "ListItem",
+                "position": {{ position }},
+                "item": {
+                  "@id": "{{ url }}",
+                  "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                }
+              }
+            {% endif %}
+          {% when 'search' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/search",
+                "name": {{ 'structured_data.breadcrumbs.search' | t | json }}
+              }
+            }
+            {% if search.performed %}
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "{{ shop.url }}/search?q={{ search.terms }}",
+                  "name": {{ search.terms | json }}
+                }
+              }
+              {% if current_page != 1 %}
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "item": {
+                    "@id": "{{ shop.url }}/search?page={{ current_page }}&q={{ search.terms }}",
+                    "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
+                  }
+                }
+              {% endif %}
+            {% endif %}
+          {% when 'cart' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ shop.url }}/cart",
+                "name": {{ 'structured_data.breadcrumbs.cart' | t | json }}
+              }
+            }
+          {% when 'page' %}
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "{{ page.url }}",
+                "name": {{ page.title | json }}
+              }
+            }
+          {% else %}
+          {% endcase %}
+        ]
+      }
+    </script>
+  {% endif %}
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-breadcrumbs end{% endcomment %}
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-product begin{% endcomment %}
+  {% comment %}
+    Product structured data
+    https://developers.google.com/search/docs/data-types/products
+  {% endcomment %}
+  
+  {% if template contains 'product' %}
+    {% assign selected_variant = product.selected_or_first_available_variant | default: product.variants.first %}
+    {% assign product_image = selected_variant.featured_image | default: product.featured_image %}
+    {%- capture product_name -%}
+      {{ product.title }}
+      {%- if selected_variant.title != 'Default Title' and selected_variant.option1 == 'Default Title' -%}
+        - {{ selected_variant.title }}
+      {%- endif -%}
+    {%- endcapture -%}
+  
+    {%- assign now = 'now' | date: '%Y-%m-%d' | split: '-' -%}
+    {% capture year_from_now %}{{ now[0] | plus: 1 }}-{{ now[1] }}-{{ now[2] | at_most: 28 }}{% endcapture %}
+  
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org/",
+      "@type": "Product",
+      "name": {{ product_name | strip_newlines | json }},
+      "image": {{ product_image | img_url: '1024x1024' | prepend: 'https:' | json }},
+      {% if product.description != blank %}
+        "description": {{ product.description | json }},
+      {% endif %}
+      {% if product.vendor %}
+        "brand": {
+          "@type": "Thing",
+          "name": {{ product.vendor | json }}
+        },
+      {% endif %}
+      {% if selected_variant.sku != blank %}
+        "sku": {{ selected_variant.sku | json }},
+      {% endif %}
+      {% if selected_variant.barcode != blank %}
+        "mpn": {{ selected_variant.barcode | json }},
+      {% endif %}
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ selected_variant.price | divided_by: 100.0 | json }},
+        "availability": "http://schema.org/{% if selected_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url": "{{ shop.url }}{{ selected_variant.url }}",
+        "seller": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+        },
+        "priceValidUntil": {{ year_from_now | json }}
+      }
+    }
+    </script>
+  {% endif %}
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-product end{% endcomment %}
+
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-website begin{% endcomment %}
+  {% comment %}
+    Store information
+    https://developers.google.com/search/docs/data-types/sitename
+  {% endcomment %}
+  
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "url": "{{ shop.url }}"
+    }
+  </script>
+  {% comment %}Inject @pixelunion/shopify-structured-data/structured-data-website end{% endcomment %}
+
+  
+  <!-- span section for clerk plugins --> 
+  <span 
+  class="clerk" 
+  data-template="@live-search"
+  data-instant-search-suggestions="6"
+  data-instant-search-categories="6"
+  data-instant-search-pages="6" 
+  data-instant-search=".header-search-input"
+  data-instant-search-positioning='right'>
+</span>
+  
+  <!-- end of span section for clerk -->
+
+  <script>
+    (function () {
+      function handleFirstTab(e) {
+        if (e.keyCode === 9) { // the "I am a keyboard user" key
+          document.body.classList.add('user-is-tabbing');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+  </script>
+  
+  <!-- Start of Zonos Script -->
+  
+<script src="https://hello.zonos.com/hello.js?siteKey=E9RAZ7V7N8XS"></script>
+  
+<script>    
+  function znDutyTaxEstimateOnDetailPage() {
+      {% if product and product.price %}
+        zonos.quote({
+          items: [{ price: "{{ product.price | money_without_currency }}", name: "{{product.title | replace: '"', '\"'}}", url: "{{ shop.secure_url }}{{ product.url }}", image: "https:{{ product.featured_image | product_img_url: 'medium' }}"}],
+          currencyCode: '{{ shop.currency }}'
+                   
+        });
+                  
+    {% endif %}
+  }
+                
+ function znDutyTaxEstimateOnCartPage() {
+    if (window.location.href.indexOf("cart") > -1) {
+      zonos.quote({
+        items: [
+          {% for item in cart.items %}
+          { price: "{{ item.price | money_without_currency }}", quantity: {{item.quantity}}, name: "{{ item.title | replace: '"', '\"'}}", url: "{{ shop.secure_url }}{{item.url}}", image: "https:{{item.image| product_img_url: 'medium'}}"},
+          {% endfor %}
+        ],currencyCode: '{{ shop.currency }}'});
+    }
+  }
+
+  znDutyTaxEstimateOnDetailPage();
+  znDutyTaxEstimateOnCartPage();
+</script>
+  
+<!-- End of Zonos Script -->
+  
+  
+  
+{% include 'social-head-common' %}</body>
+</html>
